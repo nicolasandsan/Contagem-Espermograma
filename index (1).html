@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morfologia Espermática — Critério Estrito de Kruger</title>
+<style>
+/* ===== Tema (variáveis) — altere as cores aqui ===== */
+:root{--navy:#0b2545;--teal:#12a5a5;--bg:#eef5f8;--card:#fff;--tx:#12263f;--mu:#5a6f84;--bd:#d5e2ea;--ok:#1b8a5a;--warn:#c27a00;--bad:#c0392b;--r:16px}
+[data-theme=dark]{--navy:#0d2a4d;--teal:#2ec4c4;--bg:#0a1626;--card:#122339;--tx:#e6eef6;--mu:#93a8bd;--bd:#25405c;--ok:#3ecf8e;--warn:#f0b34a;--bad:#ff7b6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+header{background:linear-gradient(120deg,var(--navy),#0f4c6b);color:#fff;padding:18px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+header h1{font-size:1.25rem;margin:0;flex:1;min-width:230px;letter-spacing:.2px}
+header small{display:block;opacity:.8;font-weight:400;font-size:.8rem}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--teal);display:grid;place-items:center}
+main{max-width:1180px;margin:0 auto;padding:16px;display:grid;gap:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:16px}
+h2{font-size:1.05rem;margin:0 0 12px;color:var(--navy)}
+[data-theme=dark] h2{color:var(--teal)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sp{flex:1}
+button,select,input,textarea{font:inherit;color:inherit}
+input,select,textarea{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px 11px;width:100%}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.btn{border:1px solid var(--bd);background:var(--card);border-radius:12px;padding:10px 16px;cursor:pointer;font-weight:600}
+.btn:hover{border-color:var(--teal)}
+.btn.pri{background:var(--teal);border-color:var(--teal);color:#032a2a}
+.btn.dng{color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+header .btn{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+.total{text-align:center;min-width:150px}
+.total b{font-size:3rem;line-height:1;color:var(--navy);display:block}
+[data-theme=dark] .total b{color:var(--teal)}
+.total span{color:var(--mu);font-size:.85rem}
+.bar{height:14px;background:var(--bg);border:1px solid var(--bd);border-radius:99px;overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),#3fd0c9);width:0;transition:width .25s}
+.banner{margin-top:12px;padding:10px 14px;border-radius:12px;background:rgba(18,165,165,.14);border:1px solid var(--teal);font-weight:600}
+.banner.done{background:rgba(27,138,90,.12);border-color:var(--ok)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.cat{position:relative;border:2px solid var(--bd);background:var(--card);border-radius:var(--r);padding:16px 10px;cursor:pointer;text-align:center;min-height:104px;transition:transform .12s,border-color .12s}
+.cat:hover:not(:disabled){border-color:var(--teal)}
+.cat.normal{border-color:var(--teal);background:rgba(18,165,165,.08)}
+.cat strong{display:block;font-size:1rem}
+.cat em{display:block;font-style:normal;font-size:2rem;font-weight:700;color:var(--navy)}
+[data-theme=dark] .cat em{color:var(--teal)}
+.cat kbd{position:absolute;top:6px;right:8px;font-size:.7rem;color:var(--mu);border:1px solid var(--bd);border-radius:5px;padding:0 5px}
+.cat.pop{animation:pop .25s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(.94);background:rgba(18,165,165,.3)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.cat.pop{animation:none}.bar i{transition:none}}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;border-bottom:1px solid var(--bd);text-align:left}
+th:nth-child(n+2),td:nth-child(n+2){text-align:right;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:700;border-top:2px solid var(--navy)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.kpis{display:grid;gap:12px;align-content:start}
+.kpi{border-radius:var(--r);padding:16px;border:1px solid var(--bd);border-left:8px solid var(--teal)}
+.kpi.ab{border-left-color:var(--navy)}
+.kpi b{font-size:2.2rem;display:block}
+.kpi span{color:var(--mu);font-size:.9rem}
+.note{font-size:.82rem;color:var(--mu);margin:10px 0 0}
+.hist{max-height:300px;overflow:auto;display:grid;gap:6px}
+.h{display:flex;gap:8px;align-items:center}
+.h span{min-width:48px;color:var(--mu);font-variant-numeric:tabular-nums}
+.h select{padding:5px 8px}
+.assoc{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.as{display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:12px;padding:8px 10px}
+.as b{min-width:28px;text-align:center}
+.as .sp{font-weight:600}
+.mini{width:36px;height:36px;border-radius:10px;border:1px solid var(--bd);background:var(--card);cursor:pointer;font-weight:700}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+label{font-size:.85rem;color:var(--mu);display:grid;gap:4px}
+.cfg{display:grid;gap:8px;margin-top:10px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9;max-width:90vw}
+#toast.on{opacity:1}
+#toast.err{background:var(--bad)}
+.printonly{display:none}
+@media(max-width:760px){.two{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}}
+@media print{
+ body{background:#fff;color:#000}
+ header,.noprint{display:none!important}
+ .printonly{display:block}
+ .card{border:none;padding:0;break-inside:avoid}
+ main{padding:0;display:block}
+ .two{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#032a2a" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="3.5"/><path d="M10.5 10.5C14 14 17 15 21 15"/></svg></div>
+ <h1>Morfologia Espermática — Critério Estrito de Kruger<small>Contagem manual · funciona offline neste navegador</small></h1>
+ <button class="btn" id="btnTheme" aria-label="Alternar modo escuro">Modo escuro</button>
+</header>
+
+<main>
+ <!-- Configuração + total + progresso -->
+ <section class="card noprint">
+  <div class="row">
+   <div class="total"><b id="total">0</b><span>espermatozoides contados</span></div>
+   <div class="sp" style="min-width:240px">
+    <div class="row">
+     <label style="max-width:230px">Meta da análise
+      <select id="goalSel"><option value="100">100 espermatozoides</option><option value="200">200 espermatozoides</option><option value="custom">Quantidade personalizada</option></select></label>
+     <label id="goalCustomWrap" hidden style="max-width:130px">Quantidade<input id="goalCustom" type="number" min="1" step="1"></label>
+     <span id="goalTxt" class="sp" style="text-align:right;color:var(--mu)"></span>
+    </div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="pbar"><i id="pfill"></i></div>
+   </div>
+  </div>
+  <div id="banner"></div>
+ </section>
+
+ <!-- Botões de contagem -->
+ <section class="card noprint">
+  <h2>Classificação <span style="font-weight:400;color:var(--mu);font-size:.85rem">— clique ou use as teclas 1–9 e 0 · Backspace desfaz</span></h2>
+  <div class="grid" id="catGrid"></div>
+  <div class="row" style="margin-top:14px">
+   <button class="btn" id="btnUndo">↶ Desfazer última contagem</button>
+   <button class="btn dng" id="btnClear">Limpar contagem</button>
+   <span class="sp"></span>
+   <button class="btn" id="btnReopen" hidden>Reabrir análise</button>
+   <button class="btn pri" id="btnFinish">Finalizar análise</button>
+  </div>
+ </section>
+
+ <!-- Resultados -->
+ <section class="card" id="report">
+  <div class="printonly" id="printHead"></div>
+  <h2>Resultados <span id="statusTag" class="noprint" style="font-weight:400;color:var(--mu);font-size:.85rem"></span></h2>
+  <div class="two">
+   <div>
+    <table>
+     <thead><tr><th>Categoria</th><th>Quantidade</th><th>Porcentagem</th></tr></thead>
+     <tbody id="tbody"></tbody>
+     <tfoot><tr><td>Total</td><td id="tN">0</td><td id="tP">0,00%</td></tr></tfoot>
+    </table>
+    <p class="note">As porcentagens usam o valor exato (quantidade ÷ total × 100) e são exibidas com duas casas decimais. A soma visual das linhas arredondadas pode diferir ligeiramente de 100,00%.</p>
+   </div>
+   <div class="kpis">
+    <div class="kpi"><b id="kN">0,00%</b><span>Formas normais — <span id="kNn">0</span> de <span class="kt">0</span></span></div>
+    <div class="kpi ab"><b id="kA">0,00%</b><span>Formas anormais — <span id="kAn">0</span> de <span class="kt">0</span></span></div>
+    <div id="assocOut"></div>
+   </div>
+  </div>
+  <div id="obsOut"></div>
+  <p class="note"><strong>Aviso:</strong> este resultado não é um laudo clínico validado. Deve ser revisado e aprovado pelo profissional responsável antes de ser utilizado ou liberado.</p>
+  <div class="row noprint" style="margin-top:12px">
+   <button class="btn pri" id="btnPrint">Imprimir / salvar PDF</button>
+   <button class="btn" id="btnCsv">Exportar CSV</button>
+   <button class="btn" id="btnCopy">Copiar resumo</button>
+  </div>
+ </section>
+
+ <!-- Defeitos associados -->
+ <section class="card noprint">
+  <h2>Defeitos associados <span style="font-weight:400;color:var(--mu);font-size:.85rem">— achados concomitantes; não alteram o total principal</span></h2>
+  <div class="assoc" id="assoc"></div>
+  <p class="note">Cada valor indica em quantos dos espermatozoides contados o defeito também foi observado. Não entra no cálculo de normais/anormais.</p>
+ </section>
+
+ <!-- Histórico -->
+ <section class="card noprint">
+  <h2>Histórico de lançamentos <span style="font-weight:400;color:var(--mu);font-size:.85rem">— altere a categoria de um lançamento para corrigi-lo</span></h2>
+  <div class="hist" id="hist"></div>
+ </section>
+
+ <!-- Identificação -->
+ <section class="card noprint">
+  <h2>Identificação da análise (opcional)</h2>
+  <div class="form">
+   <label>Código da amostra / paciente<input id="iId" autocomplete="off" placeholder="Use um código interno, sem nome completo ou CPF"></label>
+   <label>Data e hora<input id="iDt" type="datetime-local"></label>
+   <label>Profissional responsável<input id="iResp" autocomplete="off"></label>
+  </div>
+  <label style="margin-top:10px">Observações técnicas<textarea id="iObs" rows="3"></textarea></label>
+ </section>
+
+ <!-- Categorias e dados -->
+ <section class="card noprint">
+  <h2>Categorias e dados</h2>
+  <p class="note" style="margin-top:0">Siga o POP do laboratório: a lista inicial não esgota os defeitos possíveis. Renomeie, inclua ou remova categorias (só é possível remover quando a contagem é zero; “Normais” é fixa).</p>
+  <div class="cfg" id="cfg"></div>
+  <div class="row" style="margin-top:10px"><input id="newCat" placeholder="Nova categoria de alteração" style="max-width:320px"><button class="btn" id="btnAdd">Adicionar categoria</button></div>
+  <hr style="border:0;border-top:1px solid var(--bd);margin:16px 0">
+  <p class="note" style="margin-top:0">Os dados ficam salvos apenas neste navegador/dispositivo. O armazenamento local não equivale a um sistema laboratorial com backup, controle de acesso e rastreabilidade formal.</p>
+  <button class="btn dng" id="btnWipe">Apagar dados armazenados</button>
+ </section>
+</main>
+<div id="toast" role="status"></div>
+
+<script>
+/* ===== Estado e armazenamento ===== */
+const KEY='kruger_estrito_v1';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=v=>v.toFixed(2).replace('.',',')+'%';
+const nowLocal=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)};
+
+// Categorias iniciais (a primeira, id "normal", é a única considerada normal)
+const NOMES=['Normais','Microcéfalos','Megalocefalos','Piriformes','Tapering','Amorfos','Globocitos','Bicéfalos','Acéfalos','Peça intermediária','Cauda'];
+const novo=()=>({goal:100,custom:false,cats:NOMES.map((n,i)=>({id:i?'c'+i:'normal',name:n})),log:[],
+  assoc:[{id:'a1',name:'Cabeça',n:0},{id:'a2',name:'Peça intermediária',n:0},{id:'a3',name:'Cauda',n:0}],
+  info:{id:'',dt:nowLocal(),resp:'',obs:''},done:false,dark:false,nextId:100});
+let S=novo();
+try{const r=JSON.parse(localStorage.getItem(KEY)||'null');
+  if(r&&Array.isArray(r.cats)&&Array.isArray(r.log)){S=Object.assign(novo(),r);
+    const ids=new Set(S.cats.map(c=>c.id));S.log=S.log.filter(i=>ids.has(i));}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ===== Cálculo (fonte única: tela, CSV, cópia e impressão) ===== */
+function calc(){
+  const t=S.log.length,m={};S.cats.forEach(c=>m[c.id]=0);
+  S.log.forEach(i=>{if(i in m)m[i]++});
+  const p=n=>t?n/t*100:0; // evita divisão por zero
+  const rows=S.cats.map(c=>({id:c.id,name:c.name,n:m[c.id],p:p(m[c.id])}));
+  const nn=m.normal||0,ab=t-nn;
+  return{t,rows,nn,ab,pn:p(nn),pa:p(ab),sum:rows.reduce((a,r)=>a+r.n,0),psum:rows.reduce((a,r)=>a+r.p,0)};
+}
+function toast(msg,err){const e=$('#toast');e.textContent=msg;e.className='on'+(err?' err':'');clearTimeout(toast.t);toast.t=setTimeout(()=>e.className='',2600)}
+
+/* ===== Ações ===== */
+function add(id){
+  if(S.done){toast('Análise finalizada. Reabra para continuar contando.',true);return}
+  S.log.push(id);save();render(id);
+}
+function undo(){
+  if(S.done){toast('Análise finalizada. Reabra para editar.',true);return}
+  if(!S.log.length){toast('Não há lançamentos para desfazer.',true);return}
+  S.log.pop();save();render();
+}
+function clearAll(){
+  if(!S.log.length&&S.assoc.every(a=>!a.n))return;
+  if(confirm('Apagar todos os lançamentos e defeitos associados desta análise?')){
+    S.log=[];S.assoc.forEach(a=>a.n=0);S.done=false;save();render();toast('Contagem limpa.');}
+}
+function finish(){
+  const c=calc();
+  if(c.t<1){toast('Registre ao menos um espermatozoide antes de finalizar.',true);return}
+  if(c.sum!==c.t){toast('Inconsistência: soma das categorias difere do total.',true);return}
+  if(S.assoc.some(a=>a.n<0||a.n>c.t)){toast('Defeito associado maior que o total contado. Corrija antes de finalizar.',true);return}
+  if(c.t<S.goal&&!confirm(`A meta (${S.goal}) não foi atingida (${c.t} contados). Finalizar mesmo assim?`))return;
+  S.done=true;save();render();$('#report').scrollIntoView({behavior:'smooth'});toast('Análise finalizada. Revise antes de liberar.');
+}
+
+/* ===== Texto do relatório (CSV / cópia) ===== */
+function resumo(){
+  const c=calc(),i=S.info;
+  let t=`Morfologia espermática — critério estrito de Kruger\nAmostra: ${i.id||'-'}\nData/hora: ${i.dt?i.dt.replace('T',' '):'-'}\nResponsável: ${i.resp||'-'}\nTotal contado: ${c.t}\n`;
+  c.rows.forEach(r=>t+=`${r.name}: ${r.n} (${fmt(r.p)})\n`);
+  t+=`Formas normais: ${c.nn} (${fmt(c.pn)})\nFormas anormais: ${c.ab} (${fmt(c.pa)})\n`;
+  if(S.assoc.some(a=>a.n))t+='Defeitos associados: '+S.assoc.filter(a=>a.n).map(a=>`${a.name} ${a.n}`).join('; ')+'\n';
+  if(i.obs)t+=`Observações: ${i.obs}\n`;
+  return t+'Resultado sujeito a revisão e aprovação do profissional responsável.';
+}
+function csv(){
+  const c=calc(),i=S.info,q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const L=[['Amostra',i.id],['Data/hora',i.dt],['Responsável',i.resp],['Observações',i.obs],[],['Categoria','Quantidade','Porcentagem (%)']];
+  c.rows.forEach(r=>L.push([r.name,r.n,r.p.toFixed(2).replace('.',',')]));
+  L.push(['Total',c.t,c.t?'100,00':'0,00'],['Formas normais',c.nn,c.pn.toFixed(2).replace('.',',')],['Formas anormais',c.ab,c.pa.toFixed(2).replace('.',',')],[]);
+  L.push(['Defeitos associados (não somam no total)','Quantidade']);
+  S.assoc.forEach(a=>L.push([a.name,a.n]));
+  return '\ufeff'+L.map(r=>r.map(q).join(';')).join('\r\n');
+}
+
+/* ===== Renderização ===== */
+function render(popId){
+  const c=calc();
+  $('#total').textContent=c.t;
+  $('.kt');document.querySelectorAll('.kt').forEach(e=>e.textContent=c.t);
+  // Meta e progresso
+  $('#goalSel').value=S.custom?'custom':String(S.goal);
+  $('#goalCustomWrap').hidden=!S.custom;$('#goalCustom').value=S.goal;
+  const pct=S.goal?Math.min(100,c.t/S.goal*100):0;
+  $('#pfill').style.width=pct+'%';$('#pbar').setAttribute('aria-valuenow',Math.round(pct));
+  $('#goalTxt').textContent=`${c.t} de ${S.goal} (${Math.round(pct)}%)`;
+  $('#banner').innerHTML=c.t>=S.goal&&S.goal>0?`<div class="banner done">✔ Contagem planejada concluída (${S.goal}). Você pode continuar contando se o procedimento validado pelo laboratório determinar.</div>`:'';
+  // Botões de categoria
+  $('#catGrid').innerHTML=S.cats.map((k,i)=>{const r=c.rows[i];
+    return `<button class="cat${k.id==='normal'?' normal':''}" data-id="${k.id}" ${S.done?'disabled':''}>${i<10?`<kbd>${(i+1)%10}</kbd>`:''}<strong>${esc(k.name)}</strong><em>${r.n}</em></button>`}).join('');
+  if(popId){const b=$(`.cat[data-id="${popId}"]`);if(b){b.classList.add('pop')}}
+  $('#btnReopen').hidden=!S.done;$('#btnFinish').hidden=S.done;
+  $('#btnUndo').disabled=S.done||!c.t;
+  $('#statusTag').textContent=S.done?'— análise finalizada':'— análise em andamento';
+  // Tabela
+  $('#tbody').innerHTML=c.rows.map(r=>`<tr><td>${esc(r.name)}</td><td>${r.n}</td><td>${fmt(r.p)}</td></tr>`).join('');
+  $('#tN').textContent=c.t;$('#tP').textContent=c.t?'100,00%':'0,00%';
+  $('#kN').textContent=fmt(c.pn);$('#kA').textContent=fmt(c.pa);
+  $('#kNn').textContent=c.nn;$('#kAn').textContent=c.ab;
+  // Associados (resultado)
+  const aa=S.assoc.filter(a=>a.n>0);
+  $('#assocOut').innerHTML=aa.length?`<div class="note" style="margin:0"><strong>Defeitos associados</strong> (não somam no total):<br>${aa.map(a=>`${esc(a.name)}: ${a.n} (${fmt(c.t?a.n/c.t*100:0)})`).join('<br>')}</div>`:'';
+  $('#obsOut').innerHTML=S.info.obs?`<p><strong>Observações:</strong> ${esc(S.info.obs)}</p>`:'';
+  $('#printHead').innerHTML=`<h1 style="margin:0 0 6px">Morfologia Espermática — Critério Estrito de Kruger</h1><p style="margin:0 0 12px">Amostra: <b>${esc(S.info.id||'-')}</b> · Data/hora: ${esc(S.info.dt?S.info.dt.replace('T',' '):'-')} · Responsável: ${esc(S.info.resp||'-')}</p>`;
+  // Associados (controles)
+  $('#assoc').innerHTML=S.assoc.map(a=>`<div class="as"><span class="sp">${esc(a.name)}</span><button class="mini" data-a="${a.id}" data-d="-1" aria-label="Diminuir">−</button><b>${a.n}</b><button class="mini" data-a="${a.id}" data-d="1" aria-label="Aumentar">+</button></div>`).join('');
+  // Histórico (mais recente primeiro)
+  const opts=id=>S.cats.map(k=>`<option value="${k.id}"${k.id===id?' selected':''}>${esc(k.name)}</option>`).join('');
+  $('#hist').innerHTML=S.log.length?S.log.map((id,i)=>`<div class="h"><span>#${i+1}</span><select data-i="${i}" ${S.done?'disabled':''}>${opts(id)}</select></div>`).reverse().join(''):'<p class="note">Nenhum lançamento ainda. Clique em uma categoria para começar.</p>';
+  // Configuração de categorias
+  $('#cfg').innerHTML=S.cats.map(k=>`<div class="row"><input data-r="${k.id}" value="${esc(k.name)}" style="max-width:320px" aria-label="Nome da categoria"><button class="btn dng" data-x="${k.id}" ${k.id==='normal'?'disabled':''}>Remover</button></div>`).join('');
+}
+
+/* ===== Eventos ===== */
+$('#catGrid').addEventListener('click',e=>{const b=e.target.closest('.cat');if(b)add(b.dataset.id)});
+$('#btnUndo').onclick=undo;$('#btnClear').onclick=clearAll;$('#btnFinish').onclick=finish;
+$('#btnReopen').onclick=()=>{S.done=false;save();render()};
+$('#goalSel').onchange=e=>{if(e.target.value==='custom'){S.custom=true}else{S.custom=false;S.goal=+e.target.value}save();render()};
+$('#goalCustom').onchange=e=>{const v=Math.floor(+e.target.value);if(!(v>=1)){toast('Informe uma quantidade inteira maior que zero.',true);e.target.value=S.goal;return}S.goal=v;save();render()};
+$('#assoc').addEventListener('click',e=>{const b=e.target.closest('.mini');if(!b)return;
+  const a=S.assoc.find(x=>x.id===b.dataset.a),n=a.n+ +b.dataset.d,t=S.log.length;
+  if(S.done){toast('Reabra a análise para editar.',true);return}
+  if(n<0)return;if(n>t){toast('O defeito associado não pode exceder o total contado.',true);return}
+  a.n=n;save();render()});
+$('#hist').addEventListener('change',e=>{const s=e.target.closest('select');if(!s)return;S.log[+s.dataset.i]=s.value;save();render();toast('Lançamento corrigido.')});
+$('#cfg').addEventListener('change',e=>{const i=e.target.closest('input');if(!i)return;const k=S.cats.find(c=>c.id===i.dataset.r),v=i.value.trim();
+  if(!v){i.value=k.name;toast('O nome não pode ficar vazio.',true);return}k.name=v;save();render()});
+$('#cfg').addEventListener('click',e=>{const b=e.target.closest('[data-x]');if(!b)return;
+  if(S.log.includes(b.dataset.x)){toast('Há lançamentos nesta categoria. Reclassifique-os no histórico antes de remover.',true);return}
+  S.cats=S.cats.filter(c=>c.id!==b.dataset.x);save();render()});
+$('#btnAdd').onclick=()=>{const v=$('#newCat').value.trim();if(!v){toast('Digite o nome da categoria.',true);return}
+  S.cats.push({id:'n'+(S.nextId++),name:v});$('#newCat').value='';save();render()};
+['Id','Dt','Resp','Obs'].forEach(k=>{const el=$('#i'+k);el.value=S.info[k.toLowerCase()]||'';
+  el.addEventListener('input',()=>{S.info[k.toLowerCase()]=el.value;save();render()})});
+$('#btnPrint').onclick=()=>{if(!S.log.length){toast('Nada para imprimir ainda.',true);return}window.print()};
+$('#btnCsv').onclick=()=>{if(!S.log.length){toast('Nada para exportar ainda.',true);return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv()],{type:'text/csv;charset=utf-8'}));
+  a.download=`kruger_${(S.info.id||'amostra').replace(/[^\w-]+/g,'_')}.csv`;a.click();URL.revokeObjectURL(a.href)};
+$('#btnCopy').onclick=async()=>{if(!S.log.length){toast('Nada para copiar ainda.',true);return}
+  try{await navigator.clipboard.writeText(resumo());toast('Resumo copiado.')}
+  catch(e){const t=document.createElement('textarea');t.value=resumo();document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();toast('Resumo copiado.')}};
+$('#btnWipe').onclick=()=>{if(confirm('Apagar TODOS os dados armazenados e reiniciar o aplicativo?')){try{localStorage.removeItem(KEY)}catch(e){}S=novo();location.reload()}};
+$('#btnTheme').onclick=()=>{S.dark=!S.dark;save();theme()};
+function theme(){document.documentElement.dataset.theme=S.dark?'dark':'light';$('#btnTheme').textContent=S.dark?'Modo claro':'Modo escuro'}
+// Atalhos de teclado: 1–9 e 0 = categorias; Backspace = desfazer
+document.addEventListener('keydown',e=>{
+  if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(e.key==='Backspace'){e.preventDefault();undo();return}
+  if(/^[0-9]$/.test(e.key)){const i=(+e.key+9)%10;if(S.cats[i])add(S.cats[i].id)}
+});
+theme();render();
+</script>
+</body>
+</html>
